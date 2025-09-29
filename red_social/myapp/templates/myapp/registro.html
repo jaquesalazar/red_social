@@ -1,0 +1,237 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro - Red Social</title>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome para iconos -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+    }
+
+    .form-container {
+      display: flex;
+      width: 900px;
+      max-width: 95%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      background-color: #fff;
+    }
+
+    /* Sección de información */
+    .info-section {
+      width: 40%;
+      background: linear-gradient(135deg, #FFAC62, #FFF284);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      flex-direction: column;
+      color: #424242;
+    }
+
+    .info-section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .info-section p {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .info-section button {
+      margin-top: 20px;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 25px;
+      background-color: #fff;
+      color: #333;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .info-section button:hover {
+      background-color: rgba(255,255,255,0.8);
+    }
+
+    /* Sección de formulario */
+    .form-section {
+      width: 60%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-section h2 {
+      color: #5c5959;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .form-section p {
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form.user-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    form.user-form input[type="text"],
+    form.user-form input[type="email"],
+    form.user-form input[type="password"] {
+      padding: 12px 15px;
+      border-radius: 25px;
+      border: 1.5px solid #ccc;
+      outline: none;
+      font-size: 0.95rem;
+      transition: 0.3s;
+    }
+
+    form.user-form input[type="text"]:focus,
+    form.user-form input[type="email"]:focus,
+    form.user-form input[type="password"]:focus {
+      border-color: #FFAC62;
+      box-shadow: 0 0 8px rgba(255,172,98,0.5);
+    }
+
+    form.user-form input[type="submit"] {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 25px;
+      border: none;
+      background-color: #FFAC62;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    form.user-form input[type="submit"]:hover {
+      background-color: #e69447;
+    }
+
+    .social-icons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .social-icons i {
+      font-size: 1.2rem;
+      color: #555;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .social-icons i:hover {
+      background-color: #FFAC62;
+      color: #fff;
+      border-color: #FFAC62;
+    }
+
+    .privacy-link {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.85rem;
+    }
+
+    .privacy-link a {
+      color: #FFAC62;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .privacy-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        flex-direction: column;
+        height: auto;
+      }
+      .info-section {
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+      }
+      .form-section {
+        width: 100%;
+        border-radius: 0 0 20px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="form-container">
+  <!-- Sección de información -->
+  <div class="info-section">
+    <h2>SocialCaz</h2>
+    <p>Conéctate con amigos y comparte tus momentos favoritos. Tu privacidad es nuestra prioridad.</p>
+    <button>Más información</button>
+  </div>
+
+  <!-- Sección de formulario -->
+  <div class="form-section">
+    <h2>Crear cuenta</h2>
+    <p>Llena tus datos para registrarte:</p>
+    
+    <form method="post" class="user-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Registrarme">
+    </form>
+
+    <div class="privacy-link">
+      Consulta nuestro <a href="{% url 'aviso' %}" target="_blank">Aviso de Privacidad</a>
+    </div>
+
+    <div class="social-icons">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-google"></i>
+      <i class="fab fa-twitter"></i>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
