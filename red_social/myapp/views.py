@@ -8,7 +8,7 @@ def registro(request):
         form = RegistroForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data["email"]
-            password = make_password(form.cleaned_data["password"])
+            password = make_password(form.cleaned_data["password"]) # hash seguro
             consent = form.cleaned_data["consent"]
 
             # Verificar si el usuario ya existe

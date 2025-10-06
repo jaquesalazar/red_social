@@ -1,6 +1,7 @@
 from django import forms
 from .models import Usuario
 import re
+from django.contrib.auth.hashers import make_password
 
 class RegistroForm(forms.ModelForm):
     consent = forms.BooleanField(
@@ -24,4 +25,6 @@ class RegistroForm(forms.ModelForm):
             raise forms.ValidationError("Debe contener al menos una letra mayúscula.")
         if not re.search(r"[0-9]", password):
             raise forms.ValidationError("Debe contener al menos un número.")
+        if not re.search(r"[!@#$%&*]", password):
+            raise forms.ValidationError("Debe contener al menos un carácter especial.")
         return password
