@@ -1,5 +1,6 @@
 from django import forms
 from .models import Usuario
+import re
 
 class RegistroForm(forms.ModelForm):
     consent = forms.BooleanField(
@@ -13,3 +14,14 @@ class RegistroForm(forms.ModelForm):
         widgets = {
             "password": forms.PasswordInput(),
         }
+
+    def clean_password(self):
+        password = self.cleaned_data.get("password")
+        # Reglas de seguridad
+        if len(password) < 10:
+            raise forms.ValidationError("La contraseña debe tener al menos 10 caracteres.")
+        if not re.search(r"[A-Z]", password):
+            raise forms.ValidationError("Debe contener al menos una letra mayúscula.")
+        if not re.search(r"[0-9]", password):
+            raise forms.ValidationError("Debe contener al menos un número.")
+        return password

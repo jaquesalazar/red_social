@@ -86,4 +86,21 @@
 </div>
 
 </body>
+
+
+<script>
+let timer;
+function resetTimer() {
+  clearTimeout(timer);
+  timer = setTimeout(() => {
+    alert("Por seguridad, tu sesión ha expirado.");
+    window.location.href = "{% url 'registro' %}";
+  }, 1 * 60 * 1000); // 2 minutos
+}
+window.onload = resetTimer;
+document.onmousemove = resetTimer;
+document.onkeydown = resetTimer;
+</script>
+
+
 </html>
