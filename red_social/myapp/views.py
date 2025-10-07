@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import RegistroForm
-from mongo import users_coll
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth import logout
+from .forms import RegistroForm
+from mongo import users_coll, posts_coll  # Usa tus colecciones existentes
+from bson import ObjectId
 
 
 def registro(request):
@@ -24,7 +25,7 @@ def registro(request):
                     "consent_version": "v1.0"
                 })
                 messages.success(request, "Registro exitoso. Ahora inicia sesión.")
-                return redirect("login")  # 🔹 Redirigir a login
+                return redirect("login")
     else:
         form = RegistroForm()
     return render(request, "myapp/registro.html", {"form": form})
@@ -37,7 +38,7 @@ def login_view(request):
 
         usuario = users_coll.find_one({"email": email})
         if usuario and check_password(password, usuario["password"]):
-            request.session["usuario_email"] = email  # guardar sesión
+            request.session["usuario_email"] = email
             return redirect("red_social")
         else:
             messages.error(request, "Correo o contraseña incorrectos.")
@@ -59,11 +60,49 @@ def aviso(request):
 def red_social(request):
     email = request.session.get("usuario_email")
     if not email:
-        return redirect("login")  # si no hay sesión, vuelve al login
-    return render(request, "myapp/red_social.html", {"usuario": email})
+        return redirect("login")
+
+    # Cargar publicaciones (ordenadas de más recientes a más antiguas)
+    publicaciones = list(posts_coll.find().sort("_id", -1))
+
+    return render(request, "myapp/red_social.html", {
+        "usuario": email,
+        "publicaciones": publicaciones
+    })
+
+def nueva_publicacion(request):
+    if request.method == "POST":
+        email = request.session.get("usuario_email")
+        contenido = request.POST.get("contenido")
+
+        if not email:
+            return redirect("login")
+
+        contenido = contenido.strip()
+        if not contenido:
+            messages.warning(request, "No puedes publicar algo vacío.")
+            return redirect("red_social")
+
+        # Insertar la nueva publicación
+        posts_coll.insert_one({
+            "autor": email,
+            "contenido": contenido,
+            "likes": 0
+        })
+
+        # Limpia mensajes previos para evitar acumulación
+        storage = messages.get_messages(request)
+        for _ in storage:
+            pass
+
+        messages.success(request, "Publicación creada con éxito.")
+        return redirect("red_social")
+
+    return redirect("red_social")
 
 # Cerrar sesión
 def cerrar_sesion(request):
-    request.session.flush()
-    messages.info(request, "Sesión cerrada correctamente.")
-    return redirect('login')
+    if "usuario_email" in request.session:
+        request.session.flush()
+        messages.info(request, "Sesión cerrada correctamente.")
+    return redirect("login")
