@@ -162,14 +162,49 @@
         </div>
 
         <!-- 📰 Lista de publicaciones -->
+        <!-- 📰 Lista de publicaciones con likes, comentarios y eliminar -->
         {% for p in publicaciones %}
         <div class="post">
             <p class="nombre">{{ p.autor }}</p>
             <p class="texto">{{ p.contenido }}</p>
+
+            <!-- Likes y comentarios solo si no es tu publicación -->
+            {% if p.autor != usuario %}
+                <!-- Dar like -->
+                <form action="{% url 'dar_like' p.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-publicar btn-sm">
+                        👍 Me gusta ({{ p.likes|length }})
+                    </button>
+                </form>
+
+                <!-- Comentar -->
+                <form action="{% url 'comentar_publicacion' p.id %}" method="post" style="margin-top:5px;">
+                    {% csrf_token %}
+                    <input type="text" name="comentario" placeholder="Escribe un comentario..." class="form-control form-control-sm" style="width:80%; display:inline-block;">
+                    <button type="submit" class="btn-publicar btn-sm">Comentar</button>
+                </form>
+            {% else %}
+                <!-- Eliminar -->
+                <form action="{% url 'eliminar_publicacion' p.id %}" method="post" style="margin-top:5px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                </form>
+            {% endif %}
+
+            <!-- Mostrar comentarios si existen -->
+            {% if p.comentarios %}
+                <div style="margin-top:10px; padding-left:15px;">
+                    {% for c in p.comentarios %}
+                        <p><strong>{{ c.autor }}</strong>: {{ c.contenido }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
         {% empty %}
         <p>No hay publicaciones aún. ¡Sé el primero en escribir algo!</p>
         {% endfor %}
+
     </div>
 
     <!-- 💬 Mostrar mensaje de publicación exitosa -->

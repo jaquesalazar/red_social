@@ -10,4 +10,7 @@ urlpatterns = [
     path("bienvenido/", views.bienvenido, name="bienvenido"),
     path("aviso/", views.aviso, name="aviso"),
     path('cerrar_sesion/', views.cerrar_sesion, name='cerrar_sesion'),
+    path('like/<str:post_id>/', views.dar_like, name='dar_like'),
+    path('comentar/<str:post_id>/', views.comentar_publicacion, name='comentar_publicacion'),
+    path('eliminar/<str:post_id>/', views.eliminar_publicacion, name='eliminar_publicacion'),
 ]
