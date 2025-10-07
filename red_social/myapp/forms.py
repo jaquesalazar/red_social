@@ -19,7 +19,6 @@ class RegistroForm(forms.ModelForm):
 
     def clean_password(self):
         password = self.cleaned_data.get("password")
-        # Reglas de seguridad
         if len(password) < 10:
             raise forms.ValidationError("La contraseña debe tener al menos 10 caracteres.")
         if not re.search(r"[A-Z]", password):

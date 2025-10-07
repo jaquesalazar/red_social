@@ -55,7 +55,6 @@ def red_social(request):
     publicaciones = list(posts_coll.find().sort("_id", -1))
     for p in publicaciones:
         p["id"] = str(p["_id"])
-        # Inicializar likes y comentarios si no existen
         if "likes" not in p or not isinstance(p["likes"], list):
             p["likes"] = []
         if "comentarios" not in p or not isinstance(p["comentarios"], list):
@@ -108,10 +107,8 @@ def dar_like(request, post_id):
     if post and post["autor"] != email:
         likes = post.get("likes", [])
         if email in likes:
-            # Quitar like
             likes.remove(email)
         else:
-            # Agregar like
             likes.append(email)
         posts_coll.update_one({"_id": ObjectId(post_id)}, {"$set": {"likes": likes}})
     return redirect("red_social")
@@ -154,7 +151,7 @@ def eliminar_publicacion(request, post_id):
 def bienvenido(request):
     email = request.session.get("usuario_email")
     if not email:
-        return redirect("login")  # 🔒 seguridad básica
+        return redirect("login")
     return render(request, "myapp/bienvenido.html", {"email": email})
 
 def aviso(request):

@@ -114,7 +114,6 @@
             color: #555;
         }
 
-        /* 💬 Mensaje flotante */
         .mensaje-flotante {
             position: fixed;
             top: 50%;
@@ -154,7 +153,6 @@
     <div class="contenedor">
         <h2>Bienvenido, {{ usuario }} 👋</h2>
 
-        <!-- 📝 Formulario para nueva publicación -->
         <div class="publicar">
             <form action="{% url 'nueva_publicacion' %}" method="post">
                 {% csrf_token %}
@@ -164,18 +162,14 @@
             </form>
         </div>
 
-        <!-- 📰 Lista de publicaciones -->
-        <!-- 📰 Lista de publicaciones con likes, comentarios y eliminar -->
         {% for p in publicaciones %}
         <div class="post d-flex justify-content-between align-items-start">
             <div style="flex:1;">
                 <p class="nombre">{{ p.autor }}</p>
                 <p class="texto">{{ p.contenido }}</p>
 
-                <!-- Mostrar cantidad de likes -->
                 <p style="font-size:12px; color:#888;">👍 {{ p.likes|length }} Me gusta</p>
 
-                <!-- Mostrar comentarios si existen -->
                 {% if p.comentarios %}
                     <div style="margin-top:10px; padding-left:15px;">
                         {% for c in p.comentarios %}
@@ -185,9 +179,7 @@
                 {% endif %}
 
                 {% if p.autor != usuario %}
-                <!-- Botones para publicaciones de otros usuarios -->
                 <div style="margin-top:5px;">
-                    <!-- Dar like -->
                     <form action="{% url 'dar_like' p.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn-publicar btn-sm">
@@ -195,7 +187,6 @@
                         </button>
                     </form>
 
-                    <!-- Comentar -->
                     <form action="{% url 'comentar_publicacion' p.id %}" method="post" style="display:inline; margin-left:5px;">
                         {% csrf_token %}
                         <input type="text" name="comentario" placeholder="Escribe un comentario..." class="form-control form-control-sm" style="width:50%; display:inline-block;">
@@ -206,7 +197,6 @@
             </div>
 
             {% if p.autor == usuario %}
-            <!-- Botón eliminar alineado a la derecha -->
             <form action="{% url 'eliminar_publicacion' p.id %}" method="post" style="margin-left:10px;">
                 {% csrf_token %}
                 <button type="submit" class="btn-publicar btn-sm">Eliminar</button>
@@ -222,7 +212,6 @@
 
     </div>
 
-    <!-- 💬 Mostrar mensaje de publicación exitosa -->
     {% if messages %}
         {% for message in messages %}
             {% if "success" in message.tags %}
@@ -232,7 +221,6 @@
     {% endif %}
 
     <script>
-    // 🕐 Ocultar mensaje flotante después de 5 segundos
     const mensaje = document.getElementById("mensaje-flotante");
     if (mensaje) {
         setTimeout(() => {
@@ -241,7 +229,6 @@
         }, 1500);
     }
 
-    // 🕒 Control de inactividad
     let timer;
     function resetTimer() {
       clearTimeout(timer);
