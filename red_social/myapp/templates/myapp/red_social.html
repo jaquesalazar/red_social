@@ -90,6 +90,8 @@
 
         .btn-publicar:hover {
             background-color: #e69447;
+            margin-bottom: 10px;
+
         }
 
         .post {
@@ -158,6 +160,7 @@
                 {% csrf_token %}
                 <textarea name="contenido" placeholder="¿Qué estás pensando?"></textarea>
                 <button type="submit" class="btn-publicar">Publicar</button>
+                </br>
             </form>
         </div>
 
@@ -195,7 +198,7 @@
                     <!-- Comentar -->
                     <form action="{% url 'comentar_publicacion' p.id %}" method="post" style="display:inline; margin-left:5px;">
                         {% csrf_token %}
-                        <input type="text" name="comentario" placeholder="Escribe un comentario..." class="form-control form-control-sm" style="width:70%; display:inline-block;">
+                        <input type="text" name="comentario" placeholder="Escribe un comentario..." class="form-control form-control-sm" style="width:50%; display:inline-block;">
                         <button type="submit" class="btn-publicar btn-sm">Comentar</button>
                     </form>
                 </div>
@@ -211,7 +214,10 @@
             {% endif %}
         </div>
         {% empty %}
-        <p>No hay publicaciones aún. ¡Sé el primero en escribir algo!</p>
+        <div>
+            <br>
+            <p>No hay publicaciones aún. ¡Sé el primero en escribir algo!</p>
+        </div>
         {% endfor %}
 
     </div>
