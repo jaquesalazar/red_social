@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Red Social</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+        }
+        header {
+            background-color: #1877f2;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .btn-cerrar {
+            background-color: #e74c3c;
+            border: none;
+            padding: 10px 15px;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn-cerrar:hover {
+            background-color: #c0392b;
+        }
+        .contenedor {
+            max-width: 700px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .post {
+            border-bottom: 1px solid #ccc;
+            padding: 15px 0;
+        }
+        .post:last-child {
+            border-bottom: none;
+        }
+        .nombre {
+            font-weight: bold;
+        }
+        .texto {
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mi Red Social</h1>
+        <form action="{% url 'cerrar_sesion' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-cerrar">Cerrar sesión</button>
+        </form>
+    </header>
+
+    <div class="contenedor">
+        <h2>Bienvenido, {{ usuario }} 👋</h2>
+        <div class="post">
+            <p class="nombre">María López</p>
+            <p class="texto">¡Qué buen día para aprender Django! ☀️</p>
+        </div>
+        <div class="post">
+            <p class="nombre">Carlos Ruiz</p>
+            <p class="texto">Estoy probando mi primera app con MongoDB Atlas 🚀</p>
+        </div>
+        <div class="post">
+            <p class="nombre">Tú</p>
+            <p class="texto">Publica algo interesante aquí 😉</p>
+        </div>
+    </div>
+</body>
+</html>

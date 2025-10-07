@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar Sesión - SocialCaz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      height: 100vh;
+      background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Montserrat", sans-serif;
+    }
+    .login-box {
+      background-color: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      padding: 40px;
+      width: 400px;
+      text-align: center;
+    }
+    h2 {
+      color: #333;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 25px;
+      border: 1.5px solid #ccc;
+      outline: none;
+      transition: 0.3s;
+    }
+    input:focus {
+      border-color: #FFAC62;
+      box-shadow: 0 0 8px rgba(255,172,98,0.5);
+    }
+    .btn-login {
+      background-color: #FFAC62;
+      border: none;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .btn-login:hover {
+      background-color: #e69447;
+    }
+    .link {
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+    .link a {
+      color: #FFAC62;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-box">
+  <h2>Iniciar Sesión</h2>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <input type="email" name="email" placeholder="Correo electrónico" required>
+    <input type="password" name="password" placeholder="Contraseña" required>
+    <button type="submit" class="btn-login">Entrar</button>
+  </form>
+
+  <div class="link">
+    ¿No tienes cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a>
+  </div>
+</div>
+
+</body>
+</html>

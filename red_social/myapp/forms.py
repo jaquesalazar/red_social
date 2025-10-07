@@ -4,6 +4,7 @@ import re
 from django.contrib.auth.hashers import make_password
 
 class RegistroForm(forms.ModelForm):
+    
     consent = forms.BooleanField(
         required=True,
         label="He leído y acepto el Aviso de Privacidad"

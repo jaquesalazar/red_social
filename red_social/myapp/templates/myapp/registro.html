@@ -39,7 +39,6 @@
       background-color: #fff;
     }
 
-    /* Sección de información */
     .info-section {
       width: 40%;
       background: linear-gradient(135deg, #FFAC62, #FFF284);
@@ -80,7 +79,6 @@
       background-color: rgba(255,255,255,0.8);
     }
 
-    /* Sección de formulario */
     .form-section {
       width: 60%;
       padding: 40px;
@@ -144,27 +142,20 @@
       background-color: #e69447;
     }
 
-    .social-icons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
+    .link {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.85rem;
     }
 
-    .social-icons i {
-      font-size: 1.2rem;
-      color: #555;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: 0.3s;
+    .link a {
+      color: #FFAC62;
+      font-weight: 600;
+      text-decoration: none;
     }
 
-    .social-icons i:hover {
-      background-color: #FFAC62;
-      color: #fff;
-      border-color: #FFAC62;
+    .link a:hover {
+      text-decoration: underline;
     }
 
     .privacy-link {
@@ -186,15 +177,9 @@
     @media (max-width: 768px) {
       .form-container {
         flex-direction: column;
-        height: auto;
       }
-      .info-section {
+      .info-section, .form-section {
         width: 100%;
-        border-radius: 20px 20px 0 0;
-      }
-      .form-section {
-        width: 100%;
-        border-radius: 0 0 20px 20px;
       }
     }
   </style>
@@ -203,14 +188,12 @@
 <body>
 
 <div class="form-container">
-  <!-- Sección de información -->
   <div class="info-section">
     <h2>SocialCaz</h2>
     <p>Conéctate con amigos y comparte tus momentos favoritos. Tu privacidad es nuestra prioridad.</p>
     <button>Más información</button>
   </div>
 
-  <!-- Sección de formulario -->
   <div class="form-section">
     <h2>Crear cuenta</h2>
     <p>Llena tus datos para registrarte:</p>
@@ -221,15 +204,15 @@
       <input type="submit" value="Registrarme">
     </form>
 
+    <div class="link">
+      ¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a>
+    </div>
+
     <div class="privacy-link">
       Consulta nuestro <a href="{% url 'aviso' %}" target="_blank">Aviso de Privacidad y Confidencialidad</a>
     </div>
 
-    <div class="social-icons">
-      <i class="fab fa-facebook-f"></i>
-      <i class="fab fa-google"></i>
-      <i class="fab fa-twitter"></i>
-    </div>
+    
   </div>
 </div>
 
