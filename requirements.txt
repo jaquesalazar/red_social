@@ -1,7 +1,6 @@
 Django>=4.2
 pymongo[srv]>=4.0
-dnspython>=2.3.0            # para conexiones mongodb+srv
-argon2-cffi>=21.3.0        # argon2 password hasher
-django-axes>=5.0           # bloqueo de intentos de login
-django-ratelimit>=4.0      # rate limiting en vistas
-python-dotenv>=1.0.0       # cargar variables de entorno desde .env (opcional)
+dnspython>=2.3.0                    
+django-axes>=5.0           
+django-ratelimit>=4.0      
+python-dotenv>=1.0.0       
